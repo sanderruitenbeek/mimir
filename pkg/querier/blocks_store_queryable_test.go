@@ -3677,7 +3677,7 @@ func TestShouldRetry(t *testing.T) {
 		},
 		"should retry on any unknown error detail": {
 			err: func() error {
-				st, createErr := status.New(codes.Internal, "test").WithDetails(&hintspb.Block{Id: "123"})
+				st, createErr := status.New(codes.Internal, "test").WithDetails(&storepb.Block{Id: "123"})
 				require.NoError(t, createErr)
 				return st.Err()
 			}(),
@@ -3685,7 +3685,7 @@ func TestShouldRetry(t *testing.T) {
 		},
 		"should retry on multiple error details": {
 			err: func() error {
-				st, createErr := status.New(codes.Internal, "test").WithDetails(&hintspb.Block{Id: "123"}, &mimirpb.ErrorDetails{Cause: mimirpb.ERROR_CAUSE_INSTANCE_LIMIT})
+				st, createErr := status.New(codes.Internal, "test").WithDetails(&storepb.Block{Id: "123"}, &mimirpb.ErrorDetails{Cause: mimirpb.ERROR_CAUSE_INSTANCE_LIMIT})
 				require.NoError(t, createErr)
 				return st.Err()
 			}(),
