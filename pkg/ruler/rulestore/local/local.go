@@ -18,6 +18,7 @@ import (
 
 	"github.com/grafana/mimir/pkg/ruler/rulespb"
 	"github.com/grafana/mimir/pkg/ruler/rulestore"
+	"github.com/grafana/mimir/pkg/util/promqlext"
 )
 
 // fileLoader implements promRules.GroupLoader interface.
@@ -26,8 +27,11 @@ type fileLoader struct {
 	parser parser.Parser
 }
 
-// NewFileLoader creates a new fileLoader with default parser options.
+// NewFileLoader creates a new fileLoader with the given parser.
 func NewFileLoader(p parser.Parser) *fileLoader {
+	if p == nil {
+		p = promqlext.NewExperimentalParser()
+	}
 	return &fileLoader{
 		parser: p,
 	}
